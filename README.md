@@ -1,72 +1,31 @@
-<!--
-title: 'AWS NodeJS Example'
-description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Event backend
 
+Энэ repo event-ийн backend-ны кодын агуулна.
 
-# Serverless Framework AWS NodeJS Example
+## Эхлэх (Орчин)
+1. Git
+2. Node
+3. Yarn See [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/) 
+4. Энэ repo-г fork хийнэ.
 
-This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework. The deployed function does not include any event definitions as well as any kind of persistence (database). For more advanced configurations check out the [examples repo](https://github.com/serverless/examples/) which includes integrations with SQS, DynamoDB or examples of functions that are triggered in `cron`-like manner. For details about configuration of specific `events`, please refer to our [documentation](https://www.serverless.com/framework/docs/providers/aws/events/).
+### Git configuration
+  #### `Origin нэмэх === өөрийн local git-ийг нэмэх`
 
-## Usage
+    - git add remote origin гээд өөрийн repo-гийнхоо url-ийн оруулна. Жишээ: `git add remote add origin https://github.com/bilg08/event-backend.git`
+  #### `Upstream нэмэх ===  main кодны git-ийг нэмэх`
+    - git add remote upsteam гээд repo-ны url-ийн оруулна . Жишээ: `git add remote add upsteam https://github.com/PineconeLeap3DemoDay/event-beckend.git`
 
-### Deployment
+### Ажилуулах
+1. `yarn dev`
 
-In order to deploy the example, you need to run the following command:
+### Create a branch
 
-```
-$ serverless deploy
-```
+1.  өөрийн local `event-admin` repository-гоос `git checkout main` коммандыг хийн main branch руугаа шилжинэ
+2. `git pull origin main` хамгийн сүүлийн өөрчлөлтийн авах өөрийн local main branch-руугаа татаж авна
+3. `git checkout -b the-name-of-my-branch` (`the-name-of-my-branch` 
+    ийг өөрийн хүссэн нэрэээрээ солиж болно) коммандыг хийн branch үүсгэнэ
 
-After running deploy, you should see output similar to:
-
-```bash
-Deploying aws-node-project to stage dev (us-east-1)
-
-✔ Service deployed to stack aws-node-project-dev (112s)
-
-functions:
-  hello: aws-node-project-dev-hello (1.5 kB)
-```
-
-### Invocation
-
-After successful deployment, you can invoke the deployed function by using the following command:
-
-```bash
-serverless invoke --function hello
-```
-
-Which should result in response similar to the following:
-
-```json
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": {}\n}"
-}
-```
-
-### Local development
-
-You can invoke your function locally by using the following command:
-
-```bash
-serverless invoke local --function hello
-```
-
-Which should result in response similar to the following:
-
-```
-{
-    "statusCode": 200,
-    "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
-```
+### Push хийх
+1. `git add . эсвэл git add changedfile.js`
+2. `yarn commit дэлгэрэнгүй юу өөрчилсөнөө бичнэ"`
+3. `git push -u origin the name-of-my-branch`
