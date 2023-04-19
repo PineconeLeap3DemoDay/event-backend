@@ -5,10 +5,9 @@ const typeDefs = `#graphql
     hello: String
   }
 `;
-
 const resolvers = {
   Query: {
-    hello() {
+    async hello() {
       return 'world'
     } 
   },

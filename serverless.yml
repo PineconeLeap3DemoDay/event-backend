@@ -4,7 +4,108 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs16.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:*
+            - dynamodb:*
+            - lambda:InvokeFunction
+          Resource: '*'
 
+resources:
+  Resources:
+# USER TABLE
+###################################################
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: user
+###################################################
+#company table
+#######################################
+    CompanyTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: registrationnumber
+            AttributeType: S
+        KeySchema:
+          - AttributeName: registrationnumber
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: company
+#favorite table
+########################################
+    FavoriteTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: eventid #partition key
+            AttributeType: S
+          - AttributeName: userid  # sort key user 
+          #can not have same events as favorite 
+            AttributeType: S
+        KeySchema:
+          - AttributeName: eventid
+            KeyType: HASH
+          - AttributeName: userid
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: favorite
+########################################
+    # Category Table
+    CategoryTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: name
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: category
+########################################
+    # Notification Table
+    NotificationTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: _id
+            AttributeType: S
+          - AttributeName: userid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: _id
+            KeyType: HASH
+          - AttributeName: userid
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: notification
+########################################
+########################################
+    # Event Table
+    EventTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: _id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: _id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: event
+########################################
 functions:
   graphql:
     handler: src/index.handler
