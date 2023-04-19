@@ -3,8 +3,15 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs16.x
 
 functions:
-  function1:
-    handler: index.handler
+  graphql:
+    handler: src/index.handler
+    events:
+      - httpApi:
+          path: /
+          method: POST
+      - httpApi:
+          path: /
+          method: GET
