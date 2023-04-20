@@ -4,8 +4,7 @@
   "description": "<!-- title: 'AWS NodeJS Example' description: 'This template demonstrates how to deploy a NodeJS function running on AWS Lambda using the traditional Serverless Framework.' layout: Doc framework: v3 platform: AWS language: nodeJS priority: 1 authorLink: 'https://github.com/serverless' authorName: 'Serverless, inc.' authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4' -->",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "commit": "npx git-cz"
+    "dev:start": "nodemon src/index.js"
   },
   "repository": {
     "type": "git",
@@ -20,16 +19,18 @@
     "@aws-sdk/client-dynamodb": "^3.315.0",
     "@aws-sdk/util-dynamodb": "^3.315.0",
     "aws-sdk": "^2.1360.0",
-    "axios": "^1.3.5",
     "bcryptjs": "^2.4.3",
-    "dynamoose": "^3.2.0",
-    "git-cz": "^4.9.0",
+    "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.4",
     "uuid": "^9.0.0"
   },
   "bugs": {
     "url": "https://github.com/bilg08/event-backend/issues"
   },
-  "homepage": "https://github.com/bilg08/event-backend#readme"
+  "homepage": "https://github.com/bilg08/event-backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
 }
