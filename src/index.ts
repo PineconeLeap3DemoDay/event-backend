@@ -1,26 +1,28 @@
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from '@apollo/server/standalone';
-import { makeExecutableSchema } from '@graphql-tools/schema'
-import connectDB from './db';
-import { resolvers } from './resolver'
-import { categoryTypeDefs} from './type'
-import dotenv from 'dotenv';
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import connectDB from "./db";
+import { resolvers } from "./resolver";
+import { categoryTypeDefs, userTypeDefs } from "./types";
+import dotenv from "dotenv";
 dotenv.config({
-  path: '.env'
+  path: ".env",
 });
 
 async function start() {
-await connectDB();
+  await connectDB();
 
   const server = new ApolloServer({
-    typeDefs: [categoryTypeDefs],
-    resolvers
+    typeDefs: [categoryTypeDefs, userTypeDefs],
+    resolvers,
   });
-  const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
+  });
 
   console.log(`🚀 Server listening at: ${url}}`);
-} 
-start()
+}
+start();
 // module.exports.handler = startServerAndCreateLambdaHandler(
 //   server,
 //   handlers.createAPIGatewayProxyEventV2RequestHandler(),

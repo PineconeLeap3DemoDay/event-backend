@@ -39,40 +39,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var server_1 = require("@apollo/server");
-var standalone_1 = require("@apollo/server/standalone");
-var db_1 = __importDefault(require("./db"));
-var resolver_1 = require("./resolver");
-var types_1 = require("./types");
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({
-    path: ".env",
-});
-function start() {
-    return __awaiter(this, void 0, void 0, function () {
-        var server, url;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, db_1.default)()];
+exports.signup = void 0;
+var bcryptjs_1 = __importDefault(require("bcryptjs"));
+var graphql_1 = require("graphql");
+var model_1 = require("../../model");
+var token_1 = require("../../utils/token");
+var signup = function (_, _a) {
+    var user = _a.user;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var existUser, hashPass, newUser, token;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, model_1.Users.findOne({ email: user.email })];
                 case 1:
-                    _a.sent();
-                    server = new server_1.ApolloServer({
-                        typeDefs: [types_1.categoryTypeDefs, types_1.userTypeDefs],
-                        resolvers: resolver_1.resolvers,
-                    });
-                    return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, {
-                            listen: { port: 4000 },
-                        })];
+                    existUser = _b.sent();
+                    if (existUser) {
+                        throw new graphql_1.GraphQLError("User already exist", {
+                            extensions: {
+                                code: "FORBIDDEN",
+                                status: 400,
+                            },
+                        });
+                    }
+                    hashPass = bcryptjs_1.default.hashSync(user.password, 12);
+                    return [4 /*yield*/, model_1.Users.create(Object.assign(user, { password: hashPass }))];
                 case 2:
-                    url = (_a.sent()).url;
-                    console.log("\uD83D\uDE80 Server listening at: ".concat(url, "}"));
-                    return [2 /*return*/];
+                    newUser = _b.sent();
+                    token = (0, token_1.createToken)(user);
+                    return [2 /*return*/, {
+                            user: newUser,
+                            token: token,
+                        }];
             }
         });
     });
-}
-start();
-// module.exports.handler = startServerAndCreateLambdaHandler(
-//   server,
-//   handlers.createAPIGatewayProxyEventV2RequestHandler(),
-// );
+};
+exports.signup = signup;

@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/bilg08/event-backend#readme",
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.12",
     "nodemon": "^2.0.22",
     "ts-node": "^10.9.1",
