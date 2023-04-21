@@ -36,19 +36,83 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addCategory = void 0;
+exports.updateCategory = exports.deleteCategory = exports.addCategory = void 0;
 var model_1 = require("../../model");
+var graphql_1 = require("graphql");
 var addCategory = function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
-    var category;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, model_1.Category.create({
-                    name: args.name
-                })];
+    var category, _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, model_1.Category.create({
+                        name: args.name
+                    })];
             case 1:
-                category = _a.sent();
+                category = _b.sent();
                 return [2 /*return*/, category];
+            case 2:
+                _a = _b.sent();
+                throw new graphql_1.GraphQLError('Бүртгэлтэй категори байна');
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 exports.addCategory = addCategory;
+var deleteCategory = function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
+    var category;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, model_1.Category.findById(args.id)];
+            case 1:
+                category = _a.sent();
+                if (!category) {
+                    throw new graphql_1.GraphQLError('Ийм категори байхгүй', {
+                        extensions: {
+                            code: 'FORBIDDEN',
+                            http: { status: 400 },
+                        }
+                    });
+                }
+                return [4 /*yield*/, category.deleteOne()];
+            case 2:
+                _a.sent();
+                return [2 /*return*/, true];
+        }
+    });
+}); };
+exports.deleteCategory = deleteCategory;
+var updateCategory = function (_, args, context) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, name, category, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                id = args.id, name = args.name;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, model_1.Category.findById(id)];
+            case 2:
+                category = _a.sent();
+                return [4 /*yield*/, (category === null || category === void 0 ? void 0 : category.updateOne({
+                        name: name
+                    }))];
+            case 3:
+                _a.sent();
+                return [2 /*return*/, {
+                        _id: id,
+                        name: name
+                    }];
+            case 4:
+                error_1 = _a.sent();
+                throw new graphql_1.GraphQLError('Ийм категори байхгүй', {
+                    extensions: {
+                        code: 'FORBIDDEN',
+                        http: { status: 400 },
+                    }
+                });
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.updateCategory = updateCategory;
