@@ -25,19 +25,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.schema = void 0;
 var schema_1 = require("@graphql-tools/schema");
-var merge_1 = require("@graphql-tools/merge");
-var load_files_1 = require("@graphql-tools/load-files");
 var Query = __importStar(require("../resolver/query"));
 var Mutation = __importStar(require("../resolver/mutation"));
+var schema_2 = require("../schema");
 var resolvers = {
     Query: Query,
     Mutation: Mutation
 };
-//read string
-var typeArray = (0, load_files_1.loadFilesSync)(process.cwd() + '/build/schema');
-//conver the string to object that graphql can understand
-var typeDefs = (0, merge_1.mergeTypeDefs)(typeArray);
+// //read string
+// const typeArray = loadFilesSync(process.cwd()+'/build/schema');
+// //conver the string to object that graphql can understand
+// const typeDefs = mergeTypeDefs(typeArray)
 exports.schema = (0, schema_1.makeExecutableSchema)({
-    typeDefs: typeDefs,
+    typeDefs: [schema_2.categoryTypeDefs],
     resolvers: resolvers
 });

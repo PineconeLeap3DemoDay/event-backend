@@ -7,7 +7,6 @@ import dotenv from 'dotenv';
 dotenv.config({
   path: '.env'
 });
-connectDB();
 const typeDefs = `#graphql
   type Query {
     hello: String
@@ -22,6 +21,8 @@ const resolvers = {
 };
 
 async function start() {
+await connectDB();
+
   const server = new ApolloServer({
     schema
   });
