@@ -11,4 +11,4 @@ export const categoryTypeDefs = `#graphql
         deleteCategory(id: ID!): Boolean!
         updateCategory(id: ID!, name: String!): Category!
     }
-`
+`;
