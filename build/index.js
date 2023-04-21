@@ -43,22 +43,11 @@ var server_1 = require("@apollo/server");
 var standalone_1 = require("@apollo/server/standalone");
 var db_1 = __importDefault(require("./db"));
 var resolver_1 = require("./resolver");
+var type_1 = require("./type");
 var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({
     path: '.env'
 });
-var typeDefs = "#graphql\n  type Query {\n    hello: String\n  }\n";
-var resolvers = {
-    Query: {
-        hello: function () {
-            return __awaiter(this, void 0, void 0, function () {
-                return __generator(this, function (_a) {
-                    return [2 /*return*/, 'world'];
-                });
-            });
-        }
-    },
-};
 function start() {
     return __awaiter(this, void 0, void 0, function () {
         var server, url;
@@ -68,7 +57,8 @@ function start() {
                 case 1:
                     _a.sent();
                     server = new server_1.ApolloServer({
-                        schema: resolver_1.schema
+                        typeDefs: [type_1.categoryTypeDefs],
+                        resolvers: resolver_1.resolvers
                     });
                     return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, { listen: { port: 4000 } })];
                 case 2:

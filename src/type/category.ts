@@ -1,6 +1,4 @@
-import gql from 'graphql-tag'
-
-export const categoryTypeDefs = gql`
+export const categoryTypeDefs = `#graphql
     type Category {
         name: String!
         _id: ID!
