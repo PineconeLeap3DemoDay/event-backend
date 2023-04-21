@@ -32,8 +32,5 @@ const UserModel = new mongoose.Schema({
     select: false,
   },
 });
-UserModel.pre("save", async () => {
-  // console.log(this.email);
-});
 
 export const Users = mongoose.model<IUser>("User", UserModel);
