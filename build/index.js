@@ -51,7 +51,6 @@ dotenv_1.default.config({
 function start() {
     return __awaiter(this, void 0, void 0, function () {
         var server, url;
-        var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, db_1.default)()];
