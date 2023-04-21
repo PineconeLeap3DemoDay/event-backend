@@ -39,38 +39,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Users = void 0;
-var mongoose_1 = __importDefault(require("mongoose"));
-var UserModel = new mongoose_1.default.Schema({
-    firstName: {
-        type: String,
-        required: [true, "НЭРЭЭ ОРУУЛНА УУ"],
-    },
-    lastName: {
-        type: String,
-        required: [true, "ОВГОО ОРУУЛНА УУ"],
-    },
-    email: {
-        type: String,
-        required: [true, "Емайлаа ОРУУЛНА УУ"],
-        unique: true,
-        match: [
-            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-            "Та зөв емайл оруулна уу",
-        ],
-    },
-    password: {
-        type: String,
-        minLength: 4,
-        required: [true, "НУУЦ ҮГ ОРУУЛНА УУ"],
-        select: false,
-    },
-});
-UserModel.pre("save", function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        //@ts-ignore
-        console.log(this.email);
-        return [2 /*return*/];
+exports.signup = void 0;
+var bcryptjs_1 = __importDefault(require("bcryptjs"));
+var graphql_1 = require("graphql");
+var model_1 = require("../../model");
+var token_1 = require("../../utils/token");
+var signup = function (_, _a) {
+    var user = _a.user;
+    return __awaiter(void 0, void 0, void 0, function () {
+        var existUser, hashPass, newUser, token;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, model_1.Users.findOne({ email: user.email })];
+                case 1:
+                    existUser = _b.sent();
+                    if (existUser) {
+                        throw new graphql_1.GraphQLError("User already exist", {
+                            extensions: {
+                                code: "FORBIDDEN",
+                                status: 400,
+                            },
+                        });
+                    }
+                    hashPass = bcryptjs_1.default.hashSync(user.password, 12);
+                    return [4 /*yield*/, model_1.Users.create(Object.assign(user, { password: hashPass }))];
+                case 2:
+                    newUser = _b.sent();
+                    token = (0, token_1.createToken)(user);
+                    return [2 /*return*/, {
+                            user: newUser,
+                            token: token,
+                        }];
+            }
+        });
     });
-}); });
-exports.Users = mongoose_1.default.model("User", UserModel);
+};
+exports.signup = signup;

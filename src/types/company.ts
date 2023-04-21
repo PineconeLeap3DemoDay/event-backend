@@ -16,4 +16,4 @@ export const companyTypeDefs = `#graphql
         companies: [Company!]!
     }
     
-`
+`;
