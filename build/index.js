@@ -57,7 +57,7 @@ function start() {
                 case 1:
                     _a.sent();
                     server = new server_1.ApolloServer({
-                        typeDefs: [type_1.categoryTypeDefs, type_1.eventTypeDefs, type_1.companyTypeDefs],
+                        typeDefs: [type_1.categoryTypeDefs, type_1.eventTypeDefs, type_1.companyTypeDefs, type_1.userTypeDefs],
                         resolvers: resolver_1.resolvers,
                     });
                     return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, {

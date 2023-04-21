@@ -2,7 +2,12 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import connectDB from "./db";
 import { resolvers } from "./resolver";
-import { categoryTypeDefs, eventTypeDefs, companyTypeDefs } from "./type";
+import {
+  categoryTypeDefs,
+  eventTypeDefs,
+  companyTypeDefs,
+  userTypeDefs,
+} from "./type";
 import dotenv from "dotenv";
 dotenv.config({
   path: ".env",
@@ -12,7 +17,7 @@ async function start() {
   await connectDB();
 
   const server = new ApolloServer({
-    typeDefs: [categoryTypeDefs, eventTypeDefs, companyTypeDefs],
+    typeDefs: [categoryTypeDefs, eventTypeDefs, companyTypeDefs, userTypeDefs],
     resolvers,
   });
   const { url } = await startStandaloneServer(server, {
