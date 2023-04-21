@@ -1,14 +1,8 @@
 
-import categoryModel from '../../model/category';
-const addCategory = {
-    Mutation: {
-        async addCategory(_: any, args: any) {
-            const category = await categoryModel.create({
-                name: args.name
-            });
-            return category
-
-        }
-    }
+import {Category} from '../../model';
+export const addCategory = async (_: any, args: any) => {
+    const category = await Category.create({
+        name: args.name
+    });
+    return category
 }
-export default addCategory

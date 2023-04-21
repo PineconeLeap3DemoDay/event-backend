@@ -35,28 +35,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var category_1 = __importDefault(require("../../model/category"));
-var addCategory = {
-    Mutation: {
-        addCategory: function (_, args) {
-            return __awaiter(this, void 0, void 0, function () {
-                var category;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0: return [4 /*yield*/, category_1.default.create({
-                                name: args.name
-                            })];
-                        case 1:
-                            category = _a.sent();
-                            return [2 /*return*/, category];
-                    }
-                });
-            });
+exports.addCategory = void 0;
+var model_1 = require("../../model");
+var addCategory = function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
+    var category;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, model_1.Category.create({
+                    name: args.name
+                })];
+            case 1:
+                category = _a.sent();
+                return [2 /*return*/, category];
         }
-    }
-};
-exports.default = addCategory;
+    });
+}); };
+exports.addCategory = addCategory;
