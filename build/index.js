@@ -51,6 +51,7 @@ dotenv_1.default.config({
 function start() {
     return __awaiter(this, void 0, void 0, function () {
         var server, url;
+        var _this = this;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, (0, db_1.default)()];
@@ -58,9 +59,19 @@ function start() {
                     _a.sent();
                     server = new server_1.ApolloServer({
                         typeDefs: [type_1.categoryTypeDefs],
-                        resolvers: resolver_1.resolvers
+                        resolvers: resolver_1.resolvers,
                     });
-                    return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, { listen: { port: 4000 } })];
+                    return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, {
+                            context: function (_a) {
+                                var req = _a.req, res = _a.res;
+                                return __awaiter(_this, void 0, void 0, function () {
+                                    return __generator(this, function (_b) {
+                                        return [2 /*return*/, ({})];
+                                    });
+                                });
+                            },
+                            listen: { port: 4000 },
+                        })];
                 case 2:
                     url = (_a.sent()).url;
                     console.log("\uD83D\uDE80 Server listening at: ".concat(url, "}"));

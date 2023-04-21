@@ -1,4 +1,19 @@
 import mongoose from 'mongoose';
+export interface ICategory {
+    name: String
+    _id:  String
+}
+export interface CategoryAddParams {
+    name: String
+}
+export interface CategoryDeleteParams {
+    id: String
+}
+export interface CategoryUpdateParams {
+    id: String
+    name: String
+}
+
 const categoryModel = new mongoose.Schema({
     name: {
         type: String,
@@ -6,4 +21,4 @@ const categoryModel = new mongoose.Schema({
         unique: true
     }
 });
-export const Category =  mongoose.model('category', categoryModel);
+export const Category =  mongoose.model<ICategory>('category', categoryModel);
