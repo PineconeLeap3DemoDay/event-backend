@@ -23,20 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.schema = void 0;
-var schema_1 = require("@graphql-tools/schema");
+exports.resolvers = void 0;
 var Query = __importStar(require("../resolver/query"));
 var Mutation = __importStar(require("../resolver/mutation"));
-var schema_2 = require("../schema");
-var resolvers = {
+exports.resolvers = {
     Query: Query,
     Mutation: Mutation
 };
-// //read string
-// const typeArray = loadFilesSync(process.cwd()+'/build/schema');
-// //conver the string to object that graphql can understand
-// const typeDefs = mergeTypeDefs(typeArray)
-exports.schema = (0, schema_1.makeExecutableSchema)({
-    typeDefs: [schema_2.categoryTypeDefs],
-    resolvers: resolvers
-});

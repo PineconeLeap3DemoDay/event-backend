@@ -2,29 +2,19 @@ import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import connectDB from './db';
-import {schema} from './resolver'
+import { resolvers } from './resolver'
+import { categoryTypeDefs} from './type'
 import dotenv from 'dotenv';
 dotenv.config({
   path: '.env'
 });
-const typeDefs = `#graphql
-  type Query {
-    hello: String
-  }
-`;
-const resolvers = {
-  Query: {
-    async hello() {
-      return 'world'
-    }
-  },
-};
 
 async function start() {
 await connectDB();
 
   const server = new ApolloServer({
-    schema
+    typeDefs: [categoryTypeDefs],
+    resolvers
   });
   const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
 
