@@ -1,6 +1,10 @@
-const mongoose = require('mongoose');
-
-const userModel = new mongoose.Model({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var mongoose_1 = __importDefault(require("mongoose"));
+var userModel = new mongoose_1.default.Model({
     firstName: {
         type: String,
         required: [true, "НЭРЭЭ ОРУУЛНА УУ"],
@@ -25,5 +29,4 @@ const userModel = new mongoose.Model({
         select: false,
     },
 });
-
-module.exports = mongoose.model('User', userModel)
+exports.default = mongoose_1.default.model('User', userModel);

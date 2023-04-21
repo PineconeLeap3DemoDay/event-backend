@@ -1,12 +1,13 @@
-const { ApolloServer } = require('@apollo/server');
-const { startStandaloneServer } = require('@apollo/server/standalone')
-const connectDB = require('./db');
-const dotenv = require('dotenv');
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import connectDB from './db';
+import {schema} from './resolver'
+import dotenv from 'dotenv';
 dotenv.config({
   path: '.env'
 });
 connectDB();
-
 const typeDefs = `#graphql
   type Query {
     hello: String
@@ -19,16 +20,20 @@ const resolvers = {
     }
   },
 };
+// const schema = makeExecutableSchema({
+//   typeDefs,
+//   resolvers
+// })
 
 async function start() {
   const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema
   });
   const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
 
   console.log(`🚀 Server listening at: ${url}`);
-} start()
+} 
+start()
 // module.exports.handler = startServerAndCreateLambdaHandler(
 //   server,
 //   handlers.createAPIGatewayProxyEventV2RequestHandler(),
