@@ -19,6 +19,8 @@
     "@as-integrations/aws-lambda": "^2.0.1",
     "@aws-sdk/client-dynamodb": "^3.315.0",
     "@aws-sdk/util-dynamodb": "^3.315.0",
+    "@graphql-tools/load-files": "^6.6.1",
+    "@graphql-tools/merge": "^8.4.1",
     "@graphql-tools/schema": "^9.0.18",
     "aws-sdk": "^2.1360.0",
     "bcryptjs": "^2.4.3",

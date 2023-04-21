@@ -1,4 +1,4 @@
-export const categorySchema =  `#graphql
+export default  `#graphql
     type Category {
         name: String!
         _id: ID!

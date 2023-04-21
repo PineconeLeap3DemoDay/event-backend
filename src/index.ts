@@ -20,10 +20,6 @@ const resolvers = {
     }
   },
 };
-// const schema = makeExecutableSchema({
-//   typeDefs,
-//   resolvers
-// })
 
 async function start() {
   const server = new ApolloServer({
@@ -31,7 +27,7 @@ async function start() {
   });
   const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
 
-  console.log(`🚀 Server listening at: ${url}`);
+  console.log(`🚀 Server listening at: ${url}}`);
 } 
 start()
 // module.exports.handler = startServerAndCreateLambdaHandler(

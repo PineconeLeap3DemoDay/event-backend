@@ -60,10 +60,6 @@ var resolvers = {
         }
     },
 };
-// const schema = makeExecutableSchema({
-//   typeDefs,
-//   resolvers
-// })
 function start() {
     return __awaiter(this, void 0, void 0, function () {
         var server, url;
@@ -76,7 +72,7 @@ function start() {
                     return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, { listen: { port: 4000 } })];
                 case 1:
                     url = (_a.sent()).url;
-                    console.log("\uD83D\uDE80 Server listening at: ".concat(url));
+                    console.log("\uD83D\uDE80 Server listening at: ".concat(url, "}"));
                     return [2 /*return*/];
             }
         });
