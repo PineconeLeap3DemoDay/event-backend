@@ -68,8 +68,6 @@ var UserModel = new mongoose_1.default.Schema({
 });
 UserModel.pre("save", function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-        //@ts-ignore
-        console.log(this.email);
         return [2 /*return*/];
     });
 }); });
