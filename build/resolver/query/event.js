@@ -35,53 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var server_1 = require("@apollo/server");
-var standalone_1 = require("@apollo/server/standalone");
-var db_1 = __importDefault(require("./db"));
-var resolver_1 = require("./resolver");
-var type_1 = require("./type");
-var dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config({
-    path: '.env'
-});
-function start() {
-    return __awaiter(this, void 0, void 0, function () {
-        var server, url;
-        var _this = this;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, db_1.default)()];
-                case 1:
-                    _a.sent();
-                    server = new server_1.ApolloServer({
-                        typeDefs: [type_1.categoryTypeDefs, type_1.eventTypeDefs, type_1.companyTypeDefs],
-                        resolvers: resolver_1.resolvers,
-                    });
-                    return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, {
-                            context: function (_a) {
-                                var req = _a.req, res = _a.res;
-                                return __awaiter(_this, void 0, void 0, function () {
-                                    return __generator(this, function (_b) {
-                                        return [2 /*return*/, ({})];
-                                    });
-                                });
-                            },
-                            listen: { port: 4000 },
-                        })];
-                case 2:
-                    url = (_a.sent()).url;
-                    console.log("\uD83D\uDE80 Server listening at: ".concat(url, "}"));
-                    return [2 /*return*/];
-            }
-        });
+exports.events = void 0;
+var event_1 = require("../../model/event");
+var events = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var events;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, event_1.Event.find()];
+            case 1:
+                events = _a.sent();
+                return [2 /*return*/, events];
+        }
     });
-}
-start();
-// module.exports.handler = startServerAndCreateLambdaHandler(
-//   server,
-//   handlers.createAPIGatewayProxyEventV2RequestHandler(),
-// );
+}); };
+exports.events = events;
