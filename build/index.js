@@ -47,7 +47,6 @@ var dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({
     path: '.env'
 });
-(0, db_1.default)();
 var typeDefs = "#graphql\n  type Query {\n    hello: String\n  }\n";
 var resolvers = {
     Query: {
@@ -65,12 +64,14 @@ function start() {
         var server, url;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
+                case 0: return [4 /*yield*/, (0, db_1.default)()];
+                case 1:
+                    _a.sent();
                     server = new server_1.ApolloServer({
                         schema: resolver_1.schema
                     });
                     return [4 /*yield*/, (0, standalone_1.startStandaloneServer)(server, { listen: { port: 4000 } })];
-                case 1:
+                case 2:
                     url = (_a.sent()).url;
                     console.log("\uD83D\uDE80 Server listening at: ".concat(url, "}"));
                     return [2 /*return*/];
