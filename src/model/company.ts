@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 export interface ICompany {
     registrationnumber: string,
     password: string,
     rating: number
 }
-export interface addCompanyInput {
+export interface companyInput {
     company: ICompany
 }
 const companyModel = new mongoose.Schema({
@@ -15,7 +16,7 @@ const companyModel = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        min: [0, "Rating хамгийн багадаа 1 байна"],
+        min: [0, "Rating хамгийн багадаа 0 байна"],
         max: [10, "Rating хамгийн ихдээ 10 байна"],
         default: 0
     },
@@ -25,6 +26,10 @@ const companyModel = new mongoose.Schema({
         required: [true, "НУУЦ ҮГ ОРУУЛНА УУ"],
         select: false,
     },
+});
+companyModel.pre('save', async function() {
+    const hashedpassword = await bcrypt.hash(this.password, '12');
+    this.password = hashedpassword;
 });
 
 export const Company =  mongoose.model('Company', companyModel)
