@@ -27,7 +27,7 @@ export const deleteCategory = async (_: any, args: CategoryDeleteParams) => {
 export const updateCategory = async (
         _: any, 
         args: CategoryUpdateParams, 
-        context: any 
+        context: any
     ) => {
     const { id, name } = args;
     try {

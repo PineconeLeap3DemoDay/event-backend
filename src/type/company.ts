@@ -1,21 +1,26 @@
 export const companyTypeDefs = `#graphql
+    scalar Date
     type Company {
         registrationnumber: String!
         rating: Int!
         password: String!
         id: ID!
     }
-    input companyInput {
+    input addCompanyInput {
         registrationnumber: String!
         password: String!
     }
-    type signupCompanyResponse {
+    input loginCompanyInput {
+        registrationnumber: String!
+        password: String!
+    }
+    type addCompanyResponse {
         company: Company!
         token: String!
     }
     type Mutation {
-        signupCompany(company: companyInput): signupCompanyResponse
-        signinCompany(company: companyInput): signupCompanyResponse
+        addCompany(company: addCompanyInput): addCompanyResponse
+        loginCompany(company: loginCompanyInput): addCompanyResponse
     }
     type Query {
         companies: [Company!]!

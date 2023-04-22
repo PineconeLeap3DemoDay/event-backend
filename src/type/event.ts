@@ -1,37 +1,37 @@
 export const eventTypeDefs = `#graphql
+    scalar Date
+    type Company {
+        registrationnumber: String!
+        rating: Int!
+        id: ID!
+    }
     type Event {
         _id: ID!
         title: String!
         about: String!
-        price: Int!
-        category: ID!
         thumbnail: String!
         rating: Int!
         ticketcount: Int!
-        organizer: ID!
-        expirationdate: String!
+        category: ID!
+        price: Int!
+        organizer: Company!
+        expirationdate: Int!
         location: String!
+        startDate: Date
     }
     input addEventType {
         title: String!
         about: String!
         price: Int!
         category: ID!
-        thumbnail: String!
+        thumbnail: String
         ticketcount: Int!
-        organizer: ID!
-        expirationdate: String!
         location: String!
     }
-    # type Mutation {
-    #     addCategory(name: String!): Category!
-    #     deleteCategory(id: ID!): Boolean!
-    #     updateCategory(id: ID!, name: String!): Category!
-    # }
-    # type Mutation {
-    #     addEvent(): Event!
-    # }
     type Query {
         events: [Event]
+    }
+    type Mutation {
+        addEvent(event: addEventType): Boolean!
     }
 `;

@@ -28,7 +28,7 @@ const companyModel = new mongoose.Schema({
     },
 });
 companyModel.pre('save', async function() {
-    const hashedpassword = await bcrypt.hash(this.password, '12');
+    const hashedpassword = await bcrypt.hash(this.password, 12);
     this.password = hashedpassword;
 });
 

@@ -14,12 +14,13 @@ export const signup = async (_: any, { user }: any) => {
     });
   }
   const hashPass = bcrypt.hashSync(user.password, 12);
+  
   const newUser = await Users.create(
     Object.assign(user, { password: hashPass })
   );
-  const token = createToken(user);
+  const token = createToken(newUser);
   return {
-    user: newUser,
+    user: user,
     token: token,
   };
 };
