@@ -21,4 +21,4 @@ const categoryModel = new mongoose.Schema({
         unique: true
     }
 });
-export const Category =  mongoose.model<ICategory>('category', categoryModel);
+export const Category =  mongoose.model<ICategory>('Category', categoryModel);

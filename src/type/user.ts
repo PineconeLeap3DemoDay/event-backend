@@ -1,13 +1,16 @@
 export const userTypeDefs = `#graphql
+    scalar Date
+    scalar Email
+
     type User {
         _id: ID!
-        email: String!
+        email: Email!
         lastName: String!
         password: String!
         firstName: String!
     }
     input addUserInput {
-        email: String!
+        email: Email!
         lastName: String!
         firstName: String!
         password: String!

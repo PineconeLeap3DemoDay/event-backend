@@ -1,4 +1,6 @@
 export const categoryTypeDefs = `#graphql
+    scalar Date
+
     type Category {
         name: String!
         _id: ID!

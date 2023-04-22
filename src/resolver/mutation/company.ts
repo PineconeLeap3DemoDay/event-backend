@@ -3,8 +3,8 @@ import { Company, companyInput } from '../../model';
 import { GraphQLError } from 'graphql';
 import { createToken } from '../../utils/token';
 import bcrypt from 'bcryptjs';
-export const signupCompany = async (_: any, { company: input }: companyInput) => {
-    const { registrationnumber, password } = input;
+export const addCompany = async (_: any, args: companyInput) => {
+    const { registrationnumber, password } = args.company;
     const company = await Company.findOne({registrationnumber});
     if(company) {
         throw new GraphQLError("Компани бүртгэлтэй байна", {
@@ -24,8 +24,8 @@ export const signupCompany = async (_: any, { company: input }: companyInput) =>
         token: token
     };
 }
-export const signinCompany = async (_: any, { company: input }: companyInput) => {
-    const { registrationnumber, password } = input;
+export const loginCompany = async (_: any, args: companyInput) => {
+    const { registrationnumber, password } = args.company;
     const company = await Company.findOne({registrationnumber}).
     select('+password');
 
