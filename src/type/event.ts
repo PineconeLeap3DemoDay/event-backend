@@ -6,7 +6,7 @@ export const eventTypeDefs = `#graphql
         id: ID!
     }
     type Event {
-        _id: ID!
+        id: ID!
         title: String!
         about: String!
         thumbnail: String!
@@ -19,7 +19,7 @@ export const eventTypeDefs = `#graphql
         location: String!
         startDate: Date
     }
-    input addEventType {
+    input AddEventInput {
         title: String!
         about: String!
         price: Int!
@@ -28,10 +28,27 @@ export const eventTypeDefs = `#graphql
         ticketcount: Int!
         location: String!
     }
+    input UpdateEventInput {
+        eventid: String
+        title: String
+        about: String
+        price: Int
+        category: ID
+        thumbnail: String
+        ticketcount: Int
+        location: String
+    }
+    type AddAndUpdateEventResponse {
+        success: Boolean!
+        event: Event!
+    }
     type Query {
         events: [Event]
+        event(id: ID!): Event!
     }
     type Mutation {
-        addEvent(event: addEventType): Boolean!
+        addEvent(event: AddEventInput): AddAndUpdateEventResponse!
+        updateEvent(event: UpdateEventInput): AddAndUpdateEventResponse!
+        deleteEvent(eventid: ID!): Boolean!
     }
 `;

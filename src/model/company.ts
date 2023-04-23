@@ -1,13 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-export interface ICompany {
-    registrationnumber: string,
-    password: string,
-    rating: number
-}
-export interface companyInput {
-    company: ICompany
-}
+
 const companyModel = new mongoose.Schema({
     registrationnumber: {
         type: String,

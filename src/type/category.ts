@@ -3,7 +3,7 @@ export const categoryTypeDefs = `#graphql
 
     type Category {
         name: String!
-        _id: ID!
+        id: ID!
     }
     type Query {
         categories: [Category!]!

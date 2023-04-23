@@ -1,5 +1,6 @@
 
-import { Company, companyInput } from '../../model';
+import { Company } from '../../model';
+import { companyInput } from '../../types';
 import { GraphQLError } from 'graphql';
 import { createToken } from '../../utils/token';
 import bcrypt from 'bcryptjs';
