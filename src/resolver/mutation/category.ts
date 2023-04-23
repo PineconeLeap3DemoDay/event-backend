@@ -34,11 +34,9 @@ export const updateCategory = async (
         const category = await Category.findById(id);
         await category?.updateOne({
             name: name
-        })
-        return {
-            _id: id,
-            name: name
-        }
+        });
+        category?.save()
+        return category
     } catch (error) {
         throw new GraphQLError('Ийм категори байхгүй', {
             extensions: {

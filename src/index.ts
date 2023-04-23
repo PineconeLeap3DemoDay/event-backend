@@ -1,7 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import connectDB from "./db";
-import {GraphQLScalarType,Kind} from 'graphql';
 import { resolvers } from "./resolver";
 import {
   categoryTypeDefs,
@@ -14,7 +13,6 @@ import authScope from "./utils/authScope";
 dotenv.config({
   path: ".env",
 });
-
 async function start() {
   await connectDB();
 
@@ -27,9 +25,9 @@ async function start() {
     context: async ({ req, res }) => {
       const {authorization} = req?.headers;
       if (!authorization) return null;
-      const token = await authScope(authorization);
+      const user = await authScope(authorization);
       return ({
-        token
+        user
       })
     },
   },

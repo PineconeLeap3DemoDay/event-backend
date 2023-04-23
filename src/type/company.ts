@@ -1,10 +1,23 @@
 export const companyTypeDefs = `#graphql
     scalar Date
+    type Event {
+        id: ID!
+        title: String!
+        about: String!
+        thumbnail: String!
+        rating: Int!
+        ticketcount: Int!
+        category: ID!
+        price: Int!
+        expirationdate: Int!
+        location: String!
+        startDate: Date
+    }
     type Company {
         registrationnumber: String!
         rating: Int!
-        password: String!
         id: ID!
+        events: [Event]
     }
     input addCompanyInput {
         registrationnumber: String!
@@ -24,4 +37,6 @@ export const companyTypeDefs = `#graphql
     }
     type Query {
         companies: [Company!]!
-    }`;
+        company(id: ID!): Company!
+    }
+    `;

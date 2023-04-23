@@ -1,14 +1,5 @@
 import mongoose from 'mongoose';
-export interface AddEventInput {
-    title: string,
-    about: string,
-    price: number,
-    category: string,
-    thumbnail: string,
-    ticketcount: number,
-    organizer: string,
-    location: string,
-}
+
 const eventModel = new mongoose.Schema({
     title: {
         type: String,
