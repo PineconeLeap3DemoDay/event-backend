@@ -1,5 +1,9 @@
 export const companyTypeDefs = `#graphql
     scalar Date
+    type Category {
+        id: ID!
+        name: String
+    }
     type Event {
         id: ID!
         title: String!
@@ -7,7 +11,7 @@ export const companyTypeDefs = `#graphql
         thumbnail: String!
         rating: Int!
         ticketcount: Int!
-        category: ID!
+        category: Category!
         price: Int!
         expirationdate: Int!
         location: String!

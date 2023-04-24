@@ -1,6 +1,6 @@
 export interface AddEventInput {
     event: {
-        title: string,
+    title: string,
     about: string,
     price: number,
     category: string,

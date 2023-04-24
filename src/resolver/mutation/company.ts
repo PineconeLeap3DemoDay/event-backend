@@ -15,8 +15,9 @@ export const addCompany = async (_: any, args: companyInput) => {
             },
         });
     }
+    const hashedpassword = bcrypt.hashSync(password, 12);
     const newcompany = await Company.create({
-        registrationnumber, password
+        registrationnumber, password: hashedpassword
     });
     const token = createToken(newcompany);
 
