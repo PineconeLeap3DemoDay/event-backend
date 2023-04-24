@@ -5,6 +5,10 @@ export const eventTypeDefs = `#graphql
         rating: Int!
         id: ID!
     }
+    type Category {
+        name: String!
+        id: ID!
+    }
     type Event {
         id: ID!
         title: String!
@@ -12,7 +16,7 @@ export const eventTypeDefs = `#graphql
         thumbnail: String!
         rating: Int!
         ticketcount: Int!
-        category: ID!
+        category: Category!
         price: Int!
         organizer: Company!
         expirationdate: Int!

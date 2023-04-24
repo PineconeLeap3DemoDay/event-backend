@@ -3,17 +3,23 @@ import {GraphQLError} from 'graphql';
 import {AddEventInput, DeleteEventInput, UpdateEventInput} from '../../types'
 export const addEvent = async (_: any, 
     { event: input }: AddEventInput, 
-    {token}: any
+    {user}: any
 ) => {
-    if(!token || token.variant !== 'company') {
+    if(user?.variant !== 'company') {
         throw new GraphQLError('Та эвэнт нэмэх эрхгүй байна')
     }
-    const { id: companyid } = token;
+    const { id: companyid } = user;
     const company = await Company.findById(companyid);
     if(!company) {
         throw new GraphQLError('Таны оруулсан компани манайд бүртгэлгүй байна')
     }
     const newEvent = await Event.create(Object.assign(input,{organizer: companyid}));
+    
+    const companyEvents = company.events;
+    await company.updateOne({
+        events: [...companyEvents,  newEvent._id]
+    })
+    company.save();
     return {
         success: true,
         event: newEvent

@@ -19,10 +19,14 @@ const companyModel = new mongoose.Schema({
         required: [true, "НУУЦ ҮГ ОРУУЛНА УУ"],
         select: false,
     },
+    events: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'event'
+    }]
 });
-companyModel.pre('save', async function() {
-    const hashedpassword = await bcrypt.hash(this.password, 12);
-    this.password = hashedpassword;
-});
+// companyModel.pre('save', async function() {
+//     const hashedpassword = await bcrypt.hash(this.password, 12);
+//     this.password = hashedpassword;
+// });
 
 export const Company =  mongoose.model('Company', companyModel)
