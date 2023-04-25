@@ -15,7 +15,7 @@ export const addEvent = async (_: any,
     }
     const newEvent = await Event.create(Object.assign(input, { organizer: companyid }));
     //updated the company's events
-    await Company.findByIdAndUpdate(companyid, {
+    await company.updateOne(companyid, {
         $push: {events: newEvent._id}
     })
     //updated the category events

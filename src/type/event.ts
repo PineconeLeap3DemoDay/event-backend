@@ -46,8 +46,12 @@ export const eventTypeDefs = `#graphql
         success: Boolean!
         event: Event!
     }
+    input eventsQueryInput {
+        from: String,
+        to: String
+    }
     type Query {
-        events: [Event]
+        events(arg:eventsQueryInput): [Event]
         event(id: ID!): Event!
     }
     type Mutation {
