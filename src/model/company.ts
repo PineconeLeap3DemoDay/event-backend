@@ -7,6 +7,11 @@ const companyModel = new mongoose.Schema({
         required: [true, "Компани регистерийн дугаарыг ОРУУЛНА УУ"],
         unique: true
     },
+    name: {
+        type: String,
+        required: [true, "Компани нэрээ ОРУУЛНА УУ"],
+        unique: true
+    },
     rating: {
         type: Number,
         min: [0, "Rating хамгийн багадаа 0 байна"],

@@ -19,6 +19,10 @@ const categoryModel = new mongoose.Schema({
         type: String,
         required: [true, "Категорийн нэрийг оруулна уу"],
         unique: true
-    }
+    },
+    events: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'event'
+    }]
 });
 export const Category =  mongoose.model<ICategory>('Category', categoryModel);

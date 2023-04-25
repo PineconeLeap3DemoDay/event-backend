@@ -21,11 +21,13 @@ export const companyTypeDefs = `#graphql
         registrationnumber: String!
         rating: Int!
         id: ID!
+        name: String!
         events: [Event]
     }
     input addCompanyInput {
         registrationnumber: String!
         password: String!
+        name: String!
     }
     input loginCompanyInput {
         registrationnumber: String!
