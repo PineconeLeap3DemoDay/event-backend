@@ -1,6 +1,20 @@
 import { GraphQLError } from 'graphql';
 import { Event } from '../../model/event';
-export const events = async () => {
+
+export const events = async (_: any, {arg}: any) => {
+    if(arg) {
+        const { from, to } = arg;
+        console.log(from);
+        
+        const events = await Event.find({
+            startDate: {
+                $gte: new Date(from),
+                $lt: new Date(to),
+            }
+        }).populate(['organizer', 'category']);
+        
+        return events
+    }    
     const events = await Event.find().populate(['organizer', 'category']);
     return events;
 }
