@@ -66,7 +66,7 @@ export const deleteUser = async (_: any, { _id }: any) => {
   return true;
 };
 
-export const editUser = async (_: any, { _id, user }: any, { token }) => {
+export const editUser = async (_: any, { _id, user }: any) => {
   const existUser = await Users.findById(_id);
   if (!existUser) {
     throw new GraphQLError("User not found", {
