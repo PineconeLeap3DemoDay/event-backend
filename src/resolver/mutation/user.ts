@@ -51,3 +51,37 @@ export const signin = async (_: any, { email, password }: any) => {
     token: token,
   };
 };
+
+export const deleteUser = async (_: any, { _id }: any) => {
+  const existUser = await Users.findById(_id);
+  if (!existUser) {
+    throw new GraphQLError("User not found", {
+      extensions: {
+        code: "FORBIDDEN",
+        status: 400,
+      },
+    });
+  }
+  await Users.findByIdAndDelete(_id);
+  return true;
+};
+
+export const editUser = async (_: any, { _id, user }: any, { token }) => {
+  const existUser = await Users.findById(_id);
+  if (!existUser) {
+    throw new GraphQLError("User not found", {
+      extensions: {
+        code: "FORBIDDEN",
+        status: 400,
+      },
+    });
+  }
+  if (user.password) {
+    const hashPass = bcrypt.hashSync(user.password, 12);
+    await Users.findByIdAndUpdate({ _id }, { password: hashPass });
+  }
+  delete user.password;
+
+  await Users.findByIdAndUpdate(_id, user);
+  return true;
+};
