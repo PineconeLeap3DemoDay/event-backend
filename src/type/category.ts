@@ -4,9 +4,11 @@ export const categoryTypeDefs = `#graphql
     type Category {
         name: String!
         id: ID!
+        events: [Event]
     }
     type Query {
         categories: [Category!]!
+        category(categoryid:ID): Category!
     }
     type Mutation {
         addCategory(name: String!): Category!

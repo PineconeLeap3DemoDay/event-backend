@@ -5,7 +5,7 @@ import { GraphQLError } from 'graphql';
 import { createToken } from '../../utils/token';
 import bcrypt from 'bcryptjs';
 export const addCompany = async (_: any, args: companyInput) => {
-    const { registrationnumber, password } = args.company;
+    const { registrationnumber, password, name } = args.company;
     const company = await Company.findOne({registrationnumber});
     if(company) {
         throw new GraphQLError("Компани бүртгэлтэй байна", {
@@ -17,7 +17,7 @@ export const addCompany = async (_: any, args: companyInput) => {
     }
     const hashedpassword = bcrypt.hashSync(password, 12);
     const newcompany = await Company.create({
-        registrationnumber, password: hashedpassword
+        registrationnumber, name, password: hashedpassword
     });
     const token = createToken(newcompany);
 
