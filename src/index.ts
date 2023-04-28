@@ -1,12 +1,14 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
 import connectDB from "./db";
 import { resolvers } from "./resolver";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
 import {
-  categoryTypeDefs,
+  userTypeDefs,
   eventTypeDefs,
   companyTypeDefs,
-  userTypeDefs,
+  hashtagTypeDefs,
+  categoryTypeDefs,
+  favoriteTypeDefs,
 } from "./type";
 import dotenv from "dotenv";
 import authScope from "./utils/authScope";
@@ -17,21 +19,27 @@ async function start() {
   await connectDB();
 
   const server = new ApolloServer({
-    typeDefs: [categoryTypeDefs, eventTypeDefs, companyTypeDefs, userTypeDefs],
+    typeDefs: [
+      userTypeDefs,
+      eventTypeDefs,
+      companyTypeDefs,
+      hashtagTypeDefs,
+      categoryTypeDefs,
+      favoriteTypeDefs,
+    ],
     resolvers,
   });
-  const { url } = await startStandaloneServer(server,
-    {listen: { port: 4000 },
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
     context: async ({ req, res }) => {
-      const {authorization} = req?.headers;
+      const { authorization } = req?.headers;
       if (!authorization) return null;
       const user = await authScope(authorization);
-      return ({
-        user
-      })
+      return {
+        user,
+      };
     },
-  },
-  );
+  });
 
   console.log(`🚀 Server listening at: ${url}}`);
 }
