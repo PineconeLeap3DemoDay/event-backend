@@ -31,6 +31,18 @@ const UserModel = new mongoose.Schema({
     required: [true, "НУУЦ ҮГ ОРУУЛНА УУ"],
     select: false,
   },
+  favorites: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Event",
+    },
+  ],
+  hashtags: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Category",
+    },
+  ],
 });
 
 export const Users = mongoose.model<IUser>("User", UserModel);
