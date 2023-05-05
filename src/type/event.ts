@@ -48,7 +48,8 @@ export const eventTypeDefs = `#graphql
     }
     input eventsQueryInput {
         from: String,
-        to: String
+        to: String,
+        includes: String
     }
     type Query {
         events(arg:eventsQueryInput): [Event]

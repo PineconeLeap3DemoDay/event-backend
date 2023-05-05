@@ -30,7 +30,7 @@ export const userTypeDefs = `#graphql
         token: String!
     }
     type Query {
-        getUser(_id: ID!): User!
+        getUser: User!
         getUsers(page: Int!, limit: Int!): getUsersResult!
     }
     type Mutation {
