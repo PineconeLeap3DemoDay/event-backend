@@ -26,7 +26,13 @@ const companyModel = new mongoose.Schema({
     },
     events: [{
         type: mongoose.Types.ObjectId,
-        ref: 'event'
+        ref: 'event',
+        default: []
+    }],
+    followers: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        default: []
     }]
 });
 // companyModel.pre('save', async function() {

@@ -9,7 +9,6 @@ export const addFavorite = async (_: any, { eventId }: any, { user }: any) => {
   const existEvent = await Event.findById(eventId);
   const isExist =
     //@ts-ignore
-
     (await existUser.favorites.findIndex(
       (favorite: any) => favorite.toString() === eventId
     )) !== -1;
@@ -32,21 +31,22 @@ export const deleteFavorite = async (
   if (!existUser) {
     throw new GraphQLError("User not found");
   }
-  const existEvent = await Event.findById(eventId);
-  if (!existEvent) {
+  const event = await Event.findById(eventId);
+  if (!event) {
     throw new GraphQLError("Event not found");
   }
-
+  const isThisFavoriteExist =
   //@ts-ignore
-  const isExist = await existUser.favorites.filter(
-    (el: any) => el === existEvent._id
-  );
-  console.log(isExist, "kkkkkkkkkkkkkkk");
-
-  // await existUser.updateOne({
-  //   $pullAll: {
-  //     favorites: existEvent?._id,
-  //   },
-  // });
+  (await existUser.favorites.findIndex(
+    (favorite: any) => favorite.toString() === eventId
+  )) !== -1;
+  if(!isThisFavoriteExist) {
+    throw new GraphQLError("You dont have this event as favorite");
+  }
+  await existUser.updateOne({
+    $pull: {
+      favorites: event?._id,
+    },
+  });
   return true;
 };
