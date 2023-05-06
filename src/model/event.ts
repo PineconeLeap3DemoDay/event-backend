@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import { Category, Company } from './index';
 const eventModel = new mongoose.Schema({
     title: {
         type: String,
@@ -62,9 +62,13 @@ const eventModel = new mongoose.Schema({
     }
 }, {timestamps: true});
 eventModel.pre('save', async function () {
-    // console.log(this.startDate, this.endDate)
-    // const salt = await bcrypt.genSalt(10);
-    // this.password = await bcrypt.hash(this.password, salt);
+    //when event added, organizer's document will be updated
+    await Company.findByIdAndUpdate(this.organizer, {
+        $push: { events: this._id }
+    })
+    await Category.findByIdAndUpdate(this.category, {
+        $push: { events: this._id }
+    })
 });
 
 export const Event = mongoose.model('event', eventModel);

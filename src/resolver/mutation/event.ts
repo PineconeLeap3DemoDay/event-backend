@@ -14,15 +14,6 @@ export const addEvent = async (_: any,
         throw new GraphQLError('Таны оруулсан компани манайд бүртгэлгүй байна')
     }
     const newEvent = await Event.create(Object.assign(input, { organizer: companyid }));
-    //updated the company's events
-    await company.updateOne(companyid, {
-        $push: {events: newEvent._id}
-    })
-    //updated the category events
-    await Category.findByIdAndUpdate(input.category,{
-        $push: {events: newEvent._id}
-    })
-    await company.save();
     return {
         success: true,
         event: newEvent
@@ -66,6 +57,16 @@ export const deleteEvent = async (
         if (event?.organizer.toString() !== context.token.id) {
             throw new GraphQLError('Энэ эвэнт таных биш байна')
         }
+        await Company.findByIdAndUpdate(event?.organizer, {
+            $pullAll: {
+                events: event?._id
+            }
+        })
+        await Category.findByIdAndUpdate(event?.category, {
+            $pullAll: {
+                events: event?._id
+            }
+        })
         await event?.deleteOne();
         return true
     } catch (error) {

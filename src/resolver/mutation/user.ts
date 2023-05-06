@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { GraphQLError } from "graphql";
-import { Users } from "../../model";
+import { Company, Follower, Users } from "../../model";
 import { createToken } from "../../utils/token";
 
 export const signup = async (_: any, { user }: any) => {
@@ -85,3 +85,49 @@ export const editUser = async (_: any, { _id, user }: any) => {
   await Users.findByIdAndUpdate(_id, user);
   return true;
 };
+export const followCompany = async (_: any, param: any, context: any) => {
+  if(!context || context?.user?.variant !== 'user') {
+    throw new GraphQLError("you are not authorized");
+  }
+  const {id: userid} = context.user;
+  const {companyid} = param;
+  const company = await Company.findById(companyid);
+  if(!company) {
+    throw new GraphQLError("company not found");
+  }
+  const isUserAlreadyFollowedCompany = company.followers
+  .findIndex(follower => follower.toString() === userid) !== -1;
+  
+  if(isUserAlreadyFollowedCompany) {
+    throw new GraphQLError("you already followed this company");
+  }
+  await Follower.create({
+    whom: company._id,
+    who: userid
+  });
+  return true
+}
+export const unfollowCompany = async (_: any, param: any, context: any) => {
+  if(!context || context?.user?.variant !== 'user') {
+    throw new GraphQLError("you are not authorized");
+  }
+  const {id: userid} = context.user;
+  const {companyid} = param;
+  const company = await Company.findById(companyid);
+  if(!company) {
+    throw new GraphQLError("company not found");
+  }
+  const isUserFollowThisCompany = company.followers
+  .findIndex(follower => follower.toString() === userid) !== -1;
+
+  if(!isUserFollowThisCompany) {
+    throw new GraphQLError("you dont follow this company");
+  }
+  await company.updateOne({
+    $pull: {
+      followers: userid
+    }
+  })
+  await Follower.findOneAndDelete({whom: companyid, who: userid})
+  return true
+}

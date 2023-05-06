@@ -35,6 +35,8 @@ export const userTypeDefs = `#graphql
     }
     type Mutation {
         logout: Boolean!
+        followCompany(companyid: ID!): Boolean!
+        unfollowCompany(companyid: ID!): Boolean!
         deleteUser(_id: ID!): Boolean!
         signup(user: addUserInput!): getUserResult!
         editUser(_id: ID!, user: editUserInput!): Boolean!
