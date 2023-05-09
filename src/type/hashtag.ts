@@ -4,6 +4,6 @@ type Hashtag {
 }
 type Mutation {
     addHashtag(categoryId: ID!): Boolean!
-    deleteHashtag(hashtagId: ID!): Boolean!
+    deleteHashtag(categoryId: ID!): Boolean!
 }
 `;

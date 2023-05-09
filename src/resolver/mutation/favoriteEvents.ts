@@ -1,5 +1,6 @@
 import { GraphQLError } from "graphql";
 import { Users, Event } from "../../model";
+import { Favorites } from "../../model/favorite";
 
 export const addFavorite = async (_: any, { eventId }: any, { user }: any) => {
   const existUser = await Users.findById(user.id);
@@ -7,18 +8,21 @@ export const addFavorite = async (_: any, { eventId }: any, { user }: any) => {
     throw new GraphQLError("User not found");
   }
   const existEvent = await Event.findById(eventId);
-  const isExist =
-    //@ts-ignore
-    (await existUser.favorites.findIndex(
-      (favorite: any) => favorite.toString() === eventId
-    )) !== -1;
-  if (isExist) {
-    throw new GraphQLError("Event already exist");
+  if(!existEvent) {
+    throw new GraphQLError("Event does not exist ");
   }
-  await existUser.updateOne({
-    $push: { favorites: existEvent?._id },
-  });
-
+  const isExist = await Favorites.findOne({
+    eventId: existEvent.id,
+    userId: user.id
+  })
+    
+  if (isExist) {
+    throw new GraphQLError("Event already exist as favorite");
+  }
+  await Favorites.create({
+    eventId: eventId,
+    userId: user.id
+  })
   return true;
 };
 
@@ -35,14 +39,17 @@ export const deleteFavorite = async (
   if (!event) {
     throw new GraphQLError("Event not found");
   }
-  const isThisFavoriteExist =
-  //@ts-ignore
-  (await existUser.favorites.findIndex(
-    (favorite: any) => favorite.toString() === eventId
-  )) !== -1;
+  const isThisFavoriteExist = await Favorites.findOne({
+    eventId: event.id,
+    userId: user.id
+  })
   if(!isThisFavoriteExist) {
     throw new GraphQLError("You dont have this event as favorite");
   }
+  await Favorites.deleteOne({
+    eventId: event.id,
+    userId: existUser.id
+  })
   await existUser.updateOne({
     $pull: {
       favorites: event?._id,

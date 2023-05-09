@@ -127,6 +127,11 @@ export const unfollowCompany = async (_: any, param: any, context: any) => {
     $pull: {
       followers: userid
     }
+  });
+  await Users.findByIdAndUpdate(userid, {
+    $pull: {
+      following: companyid
+    }
   })
   await Follower.findOneAndDelete({whom: companyid, who: userid})
   return true

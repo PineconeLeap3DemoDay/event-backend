@@ -44,7 +44,7 @@ export const addHashtag = async (
 
 export const deleteHashtag = async (
   _: any,
-  { hashtagId }: any,
+  { categoryId }: any,
   { user }: any
 ) => {
   const existUser = await Users.findById(user.id);
@@ -56,6 +56,11 @@ export const deleteHashtag = async (
       },
     });
   }
-  await Hashtag.findByIdAndDelete(hashtagId);
+  await existUser.updateOne({
+    $pull: {
+      hashtags: categoryId
+    }
+  })
+  await Hashtag.findOneAndDelete({userId: user.id, categoryId: categoryId});
   return true;
 };

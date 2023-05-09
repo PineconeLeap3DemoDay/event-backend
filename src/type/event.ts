@@ -1,10 +1,6 @@
 export const eventTypeDefs = `#graphql
     scalar Date
-    type Company {
-        registrationnumber: String!
-        rating: Int!
-        id: ID!
-    }
+    
     type Category {
         name: String!
         id: ID!
@@ -22,6 +18,7 @@ export const eventTypeDefs = `#graphql
         expirationdate: Int!
         location: String!
         startDate: Date
+        endDate: Date
     }
     input AddEventInput {
         title: String!

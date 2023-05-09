@@ -34,13 +34,19 @@ const UserModel = new mongoose.Schema({
   favorites: [
     {
       type: mongoose.Types.ObjectId,
-      ref: "Event",
+      ref: "event",
     },
   ],
   hashtags: [
     {
       type: mongoose.Types.ObjectId,
       ref: "Category",
+    },
+  ],
+  following: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Company",
     },
   ],
 });

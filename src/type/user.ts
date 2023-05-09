@@ -1,6 +1,10 @@
 export const userTypeDefs = `#graphql
     scalar Date
     scalar Email
+    type Hashtag {
+        id: ID!
+        name: String
+    }
 
     type User {
         _id: ID!
@@ -8,6 +12,8 @@ export const userTypeDefs = `#graphql
         lastName: String!
         password: String!
         firstName: String!
+        hashtags: [Hashtag]
+        favorites: [Event]
     }
     input addUserInput {
         email: Email!
