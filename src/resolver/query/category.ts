@@ -11,6 +11,7 @@ export const categories = async () => {
 }
 export const category = async (_: any, args: any) => {
     const { categoryid: categoryid } = args;
+
     try {
         const category = await Category.findById(categoryid);
         await category?.populate({

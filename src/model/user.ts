@@ -5,6 +5,7 @@ export interface IUser {
   lastName: string;
   password: string;
   firstName: string;
+  hashtags: any[]
 }
 
 const UserModel = new mongoose.Schema({

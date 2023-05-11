@@ -27,6 +27,21 @@ export const userTypeDefs = `#graphql
         firstName: String
         password: String
     }
+    type MyHashTagEvent {
+        _id: ID!
+        title: String!
+        about: String!
+        thumbnail: String!
+        rating: Int!
+        ticketcount: Int!
+        category: Category!
+        price: Int!
+        organizer: Company!
+        expirationdate: Int!
+        location: String!
+        startDate: Date
+        endDate: Date
+    }
     type getUsersResult {
         users: [User!]
         totalPages: Int!
@@ -37,6 +52,7 @@ export const userTypeDefs = `#graphql
     }
     type Query {
         getUser: User!
+        myHashtagEvents: [MyHashTagEvent]
         getUsers(page: Int!, limit: Int!): getUsersResult!
     }
     type Mutation {

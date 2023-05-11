@@ -47,6 +47,7 @@ export const eventTypeDefs = `#graphql
         from: String,
         to: String,
         includes: String
+        categoryid: String
     }
     type Query {
         events(arg:eventsQueryInput): [Event]

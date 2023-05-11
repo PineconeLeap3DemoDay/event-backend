@@ -4,8 +4,18 @@ import { Event } from '../../model/event';
 export const events = async (_: any, {arg}: any) => {
     if(arg?.from && arg?.to) {
         const { from, to } = arg;
-        console.log(from);
-        
+        if(arg?.categoryid) {
+            console.log(arg)
+            const events = await Event.find({
+                startDate: {
+                    $gte: new Date(from),
+                    $lt: new Date(to),
+                },
+                category: arg?.categoryid,
+            }).populate(['organizer', 'category']);
+            console.log(events)
+            return events
+        }
         const events = await Event.find({
             startDate: {
                 $gte: new Date(from),
@@ -22,7 +32,7 @@ export const events = async (_: any, {arg}: any) => {
     const events = await Event.find().populate(['organizer', 'category']);
     return events;
 }
-export const event = async (parent: any, args: any) => {
+export const event = async (_parent: any, args: any) => {
     const { id: eventid } = args;
     try {
         const event = await Event.findById(eventid).populate(['organizer', 'category']);
