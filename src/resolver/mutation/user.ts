@@ -66,8 +66,9 @@ export const deleteUser = async (_: any, { _id }: any) => {
   return true;
 };
 
-export const editUser = async (_: any, { _id, user }: any) => {
-  const existUser = await Users.findById(_id);
+export const editUser = async (_: any, {user: input}: any, context: any) => {
+  const {id: userid} =context.user;
+  const existUser = await Users.findById(userid);
   if (!existUser) {
     throw new GraphQLError("User not found", {
       extensions: {
@@ -76,13 +77,13 @@ export const editUser = async (_: any, { _id, user }: any) => {
       },
     });
   }
-  if (user.password) {
-    const hashPass = bcrypt.hashSync(user.password, 12);
-    await Users.findByIdAndUpdate({ _id }, { password: hashPass });
+  if (input.password) {
+    const hashPass = bcrypt.hashSync(input.password, 12);
+    await Users.findByIdAndUpdate(userid, { ...input, password: hashPass });
   }
-  delete user.password;
+  delete input.password;
 
-  await Users.findByIdAndUpdate(_id, user);
+  await existUser.updateOne(input)
   return true;
 };
 export const followCompany = async (_: any, param: any, context: any) => {

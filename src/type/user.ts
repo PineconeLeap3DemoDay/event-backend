@@ -61,7 +61,7 @@ export const userTypeDefs = `#graphql
         unfollowCompany(companyid: ID!): Boolean!
         deleteUser(_id: ID!): Boolean!
         signup(user: addUserInput!): getUserResult!
-        editUser(_id: ID!, user: editUserInput!): Boolean!
+        editUser(user: editUserInput!): Boolean!
         signin(email: String!, password: String!): getUserResult!
     }
 `;
