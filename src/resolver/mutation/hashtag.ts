@@ -56,11 +56,11 @@ export const deleteHashtag = async (
       },
     });
   }
+  await Hashtag.findOneAndDelete({userId: user.id, categoryId: categoryId});
   await existUser.updateOne({
     $pull: {
       hashtags: categoryId
     }
   })
-  await Hashtag.findOneAndDelete({userId: user.id, categoryId: categoryId});
   return true;
 };

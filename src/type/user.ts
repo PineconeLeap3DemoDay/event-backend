@@ -14,6 +14,7 @@ export const userTypeDefs = `#graphql
         firstName: String!
         hashtags: [Hashtag]
         favorites: [Event]
+        tickets: [Event]
     }
     input addUserInput {
         email: Email!
@@ -53,6 +54,7 @@ export const userTypeDefs = `#graphql
     type Query {
         getUser: User!
         myHashtagEvents: [MyHashTagEvent]
+        myTickets: [Event]
         getUsers(page: Int!, limit: Int!): getUsersResult!
     }
     type Mutation {

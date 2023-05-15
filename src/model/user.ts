@@ -5,7 +5,8 @@ export interface IUser {
   lastName: string;
   password: string;
   firstName: string;
-  hashtags: any[]
+  hashtags: any[];
+  fcmtoken?: string
 }
 
 const UserModel = new mongoose.Schema({
@@ -50,6 +51,15 @@ const UserModel = new mongoose.Schema({
       ref: "Company",
     },
   ],
+  tickets: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "event",
+    },
+  ],
+  fcmtoken: {
+    type: String,
+  }
 });
 
 export const Users = mongoose.model<IUser>("User", UserModel);

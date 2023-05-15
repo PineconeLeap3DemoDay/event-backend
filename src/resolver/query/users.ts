@@ -1,10 +1,12 @@
 import { GraphQLError } from "graphql";
-import { Users, Event, Category } from "../../model";
+import { Users, Event, Category, Ticket } from "../../model";
 import mongoose from "mongoose";
 export const getUser = async (_: any, _param: any, context: any) => {
     const { user } = context;
     try {
-        const user1 = await Users.findById(user?.id).populate(["favorites", 'hashtags', 'following']);
+        const user1 = await Users.findById(user?.id).populate(["favorites", 'hashtags', 'following','tickets']);
+       //@ts-ignore
+        console.log(user1.tickets)
         return user1;
     } catch (error) {
         throw new GraphQLError('user not found')
@@ -46,4 +48,11 @@ export const myHashtagEvents = async (_: any, _param: any, context: any) => {
     } catch (error) {
         throw new GraphQLError('user not found')
     }
+}
+export const myTickets = async(_: any, _param: any, context: any) => {
+    const { user } = context;
+    const tickets = await Ticket.find({
+        userid: user.id
+    });
+    return tickets
 }

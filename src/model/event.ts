@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { Category, Company } from './index';
+import axios from 'axios'
+import { Category, Company, Hashtag, Users } from './index';
 const eventModel = new mongoose.Schema({
     title: {
         type: String,
@@ -68,6 +69,33 @@ eventModel.pre('save', async function () {
     })
     await Category.findByIdAndUpdate(this.category, {
         $push: { events: this._id }
+    });
+    const usersWithThisEventCategoryAsHashtag = await Hashtag.find({
+        categoryId: this.category
+    });
+    usersWithThisEventCategoryAsHashtag.forEach(async (elem) => {
+        const user = await Users.findById(elem.userId);
+        if(user?.fcmtoken || user?.fcmtoken !== "") {
+            await axios({
+                method: 'POST',
+                url: 'https://fcm.googleapis.com/fcm/send',
+                headers: {
+                    Authorization: `key=AAAAiw-HM0E:APA91bFRVy12OOV_kHxB2auhs5cpQaPjebF9Gk9VbEu6OJ_iSnP5eyhn7SEtklMxLY2mBWoU9jC3348Ro8ZvJC4ADrJj8Kns-BZxTV3vh07OYd7IKbl6zZxWPuhVJB1rob91IcfBp34X`,
+                },
+                data: {
+                    "to" : user?.fcmtoken,
+                    "notification" : {
+                        "body" : "Таны дуртай категорит эвэнт нэмэгдлээ",
+                        "title": "Шинэ эвэнт нэмэгдлээ"
+                    },
+                    "data" : {
+                        "body" : "Таны дуртай категорит эвэнт нэмэгдлээ",
+                        "title": "Шинэ эвэнт нэмэгдлээ",
+                        "thumbnail": this.thumbnail
+                    }
+                   }
+            })
+        }
     })
 });
 
