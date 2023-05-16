@@ -5,14 +5,27 @@ export const eventTypeDefs = `#graphql
         name: String!
         id: ID!
     }
+
+    type City {
+        name: String
+        events: [Event]
+    }
+
+    type Country {
+        name: String,
+        cities: [City]
+    }
+    
     type Event {
-        id: ID!
+        _id: ID!
         title: String!
         about: String!
         thumbnail: String!
         rating: Int!
         ticketcount: Int!
         category: Category!
+        country: Country!
+        city: City!
         price: Int!
         organizer: Company!
         expirationdate: Int!
@@ -28,6 +41,8 @@ export const eventTypeDefs = `#graphql
         thumbnail: String
         ticketcount: Int!
         location: String!
+        country: ID!
+        city: ID!
     }
     input UpdateEventInput {
         eventid: String
@@ -47,7 +62,9 @@ export const eventTypeDefs = `#graphql
         from: String,
         to: String,
         includes: String
-        categoryid: String
+        categoryid: ID
+        countryid: ID
+        cityid: ID
     }
     type Query {
         events(arg:eventsQueryInput): [Event]

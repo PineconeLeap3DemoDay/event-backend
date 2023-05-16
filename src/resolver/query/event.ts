@@ -1,36 +1,16 @@
 import { GraphQLError } from 'graphql';
 import { Event } from '../../model/event';
+import aggregatePipeline from '../../utils/pipeline';
 
-export const events = async (_: any, {arg}: any) => {
-    if(arg?.from && arg?.to) {
-        const { from, to } = arg;
-        if(arg?.categoryid) {
-            console.log(arg)
-            const events = await Event.find({
-                startDate: {
-                    $gte: new Date(from),
-                    $lt: new Date(to),
-                },
-                category: arg?.categoryid,
-            }).populate(['organizer', 'category']);
-            console.log(events)
-            return events
-        }
-        const events = await Event.find({
-            startDate: {
-                $gte: new Date(from),
-                $lt: new Date(to),
-            }
-        }).populate(['organizer', 'category']);
-        return events
-    } else if(arg?.includes) {
-        const events = await Event.find({
-            title: { $regex: arg.includes, "$options": "i" }
-        })
-        return events;
-    }
-    const events = await Event.find().populate(['organizer', 'category']);
-    return events;
+export const events = async (_: any, { arg }: any) => {
+    let pipeline = aggregatePipeline(arg)
+    
+    const a = await Event.aggregate(pipeline);
+    a.map(b => b.category = b.category[0])
+    a.map(b => b.country = b.country[0])
+    a.map(b => b.city = b.city[0])
+    a.map(b => b.organizer = b.organizer[0])
+    return a;
 }
 export const event = async (_parent: any, args: any) => {
     const { id: eventid } = args;

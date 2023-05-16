@@ -5,3 +5,4 @@ export * from "./hashtag";
 export * from "./category";
 export * from "./favoriteEvents";
 export * from './ticket'
+export * from './country'

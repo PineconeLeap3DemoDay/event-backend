@@ -10,6 +10,7 @@ import {
   categoryTypeDefs,
   favoriteTypeDefs,
   ticketTypeDefs,
+  countryTypeDefs
 } from "./type";
 import dotenv from "dotenv";
 import authScope from "./utils/authScope";
@@ -27,7 +28,8 @@ async function start() {
       hashtagTypeDefs,
       categoryTypeDefs,
       favoriteTypeDefs,
-      ticketTypeDefs
+      ticketTypeDefs,
+      countryTypeDefs
     ],
     resolvers,
   });

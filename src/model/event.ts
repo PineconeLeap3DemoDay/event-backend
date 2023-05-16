@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import axios from 'axios'
 import { Category, Company, Hashtag, Users } from './index';
+import { City } from './city';
 const eventModel = new mongoose.Schema({
     title: {
         type: String,
@@ -21,6 +22,17 @@ const eventModel = new mongoose.Schema({
         min: [0, "Rating хамгийн багадаа 1 байна"],
         max: [10, "Rating хамгийн ихдээ 10 байна"],
         default: 0,
+    },
+    country: {
+        type: mongoose.Types.ObjectId,
+        ref: 'country',
+        required: [true, 'Та эвэнтийн болох улсаа оруулна уу'],
+        trim: true,
+    },
+    city: {
+        type: mongoose.Types.ObjectId,
+        ref: 'city',
+        required: [true, 'Та эвэнтийн болох хотоо оруулна уу'],
     },
     location: {
         type: String,
@@ -70,6 +82,11 @@ eventModel.pre('save', async function () {
     await Category.findByIdAndUpdate(this.category, {
         $push: { events: this._id }
     });
+    await City.findByIdAndUpdate(this.city, {
+        $push: {
+            events: this._id
+        }
+    })
     const usersWithThisEventCategoryAsHashtag = await Hashtag.find({
         categoryId: this.category
     });
