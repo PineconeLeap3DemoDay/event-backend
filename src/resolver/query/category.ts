@@ -1,5 +1,5 @@
-import { GraphQLError } from 'graphql';
-import { Category } from '../../model/category';
+import { Category, Event } from '../../model';
+import mongoose from 'mongoose';
 export const categories = async () => {
     const categories = await Category.find().populate({
         path: 'events',
@@ -11,18 +11,28 @@ export const categories = async () => {
 }
 export const category = async (_: any, args: any) => {
     const { categoryid: categoryid } = args;
-
-    try {
-        const category = await Category.findById(categoryid);
-        await category?.populate({
-            path: 'events',
-            populate: {
-                path: 'category',
+    const categoryEvents = await Category.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(categoryid)
             }
-        })
-        return category;
-    } catch (error) {
-        throw new GraphQLError(`${categoryid}-тай cat`)
-    }
+        },
+        {
+            $lookup: {
+                from: Event.collection.name,
+                localField: 'events',
+                foreignField: '_id',
+                as: 'events'
+            }
+        },
+        {
+            $match: {
+                "events.startDate": {
+                    $gte: new Date()
+                }
+            }
+        }
+    ]);
+    return categoryEvents[0];
     
 }

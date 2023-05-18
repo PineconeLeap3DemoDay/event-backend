@@ -36,6 +36,13 @@ export const myHashtagEvents = async (_: any, _param: any, context: any) => {
                 }
             },
             {
+                $match: {
+                    "hashtags.event.startDate": {
+                        $gte: new Date()
+                    }
+                }
+            },
+            {
                 $sample: {
                     size: 5
                 }
