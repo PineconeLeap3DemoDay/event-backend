@@ -15,6 +15,7 @@ export const userTypeDefs = `#graphql
         hashtags: [Hashtag]
         favorites: [Event]
         tickets: [Event]
+        profile: String
     }
     input addUserInput {
         email: Email!
@@ -43,10 +44,9 @@ export const userTypeDefs = `#graphql
         startDate: Date
         endDate: Date
     }
-    type getUsersResult {
-        users: [User!]
-        totalPages: Int!
-    }
+    # type getAllUsersResult {
+    #     users: [User!]
+    # }
     type getUserResult {
         user: User!
         token: String!
@@ -55,9 +55,9 @@ export const userTypeDefs = `#graphql
         getUser: User!
         myHashtagEvents: [MyHashTagEvent]
         myTickets: [Event]
-        getUsers(page: Int!, limit: Int!): getUsersResult!
+        getUsers: [User]
     }
-    type Mutation {
+    type Mutation { 
         logout: Boolean!
         followCompany(companyid: ID!): Boolean!
         unfollowCompany(companyid: ID!): Boolean!
