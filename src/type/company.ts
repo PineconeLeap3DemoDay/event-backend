@@ -3,6 +3,7 @@ export const companyTypeDefs = `#graphql
     type Category {
         id: ID!
         name: String
+        profile: String
     }
     type Event {
         id: ID!
@@ -24,6 +25,7 @@ export const companyTypeDefs = `#graphql
         name: String!
         events: [Event]
         followers: [User]
+        profile: String
     }
     input addCompanyInput {
         registrationnumber: String!
