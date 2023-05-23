@@ -5,9 +5,14 @@ export const userTypeDefs = `#graphql
         id: ID!
         name: String
     }
-
+    type Notification {
+        title: String!
+        thumbnail: String!
+        subtitle: String
+        id: ID!
+    }
     type User {
-        _id: ID!
+        _id: ID
         email: Email!
         lastName: String!
         password: String!
@@ -15,6 +20,7 @@ export const userTypeDefs = `#graphql
         hashtags: [Hashtag]
         favorites: [Event]
         tickets: [Event]
+        notifications: [Notification]
     }
     input addUserInput {
         email: Email!

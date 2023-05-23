@@ -6,7 +6,9 @@ export interface IUser {
   password: string;
   firstName: string;
   hashtags: any[];
-  fcmtoken?: string
+  fcmtoken?: string;
+  isNotificationEnabled?: boolean,
+  notifications?: [];
 }
 
 const UserModel = new mongoose.Schema({
@@ -57,8 +59,18 @@ const UserModel = new mongoose.Schema({
       ref: "event",
     },
   ],
+  notifications: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "notification",
+    },
+  ],
   fcmtoken: {
     type: String,
+  },
+  isNotificationEnabled: {
+    type: Boolean,
+    default: false
   }
 });
 

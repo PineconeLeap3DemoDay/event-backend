@@ -4,9 +4,8 @@ import mongoose from "mongoose";
 export const getUser = async (_: any, _param: any, context: any) => {
     const { user } = context;
     try {
-        const user1 = await Users.findById(user?.id).populate(["favorites", 'hashtags', 'following','tickets']);
+        const user1 = await Users.findById(user?.id).populate(["favorites", 'hashtags', 'following','tickets', 'notifications']);
        //@ts-ignore
-        console.log(user1.tickets)
         return user1;
     } catch (error) {
         throw new GraphQLError('user not found')
@@ -49,8 +48,6 @@ export const myHashtagEvents = async (_: any, _param: any, context: any) => {
             }
         ]);
         const events = (user1[0]?.hashtags?.events);
-        console.log(events);
-        
         return events
     } catch (error) {
         throw new GraphQLError('user not found')

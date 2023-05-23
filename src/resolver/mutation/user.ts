@@ -19,7 +19,7 @@ export const signup = async (_: any, { user }: any) => {
   );
   const token = createToken(newUser);
   return {
-    user: user,
+    user: newUser,
     token: token,
   };
 };
