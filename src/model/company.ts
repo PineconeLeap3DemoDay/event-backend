@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 
 const companyModel = new mongoose.Schema({
   registrationnumber: {
@@ -10,6 +9,11 @@ const companyModel = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Компани нэрээ ОРУУЛНА УУ"],
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: [true, "Компани и-мэйл ОРУУЛНА УУ"],
     unique: true,
   },
   rating: {
