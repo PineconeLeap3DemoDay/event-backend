@@ -12,13 +12,14 @@ export const events = async (_: any, { arg }: any) => {
         a.map(b => b.organizer = b.organizer[0])
         return a;
     }
-    const events = await Event.find().populate(['organizer', 'category']);
+    const events = await Event.find().populate(['organizer', 'category','city','country']);
     return events
 }
 export const event = async (_parent: any, args: any) => {
     const { id: eventid } = args;
+    console.log(eventid)
     try {
-        const event = await Event.findById(eventid).populate(['organizer', 'category']);
+        const event = await Event.findById(eventid).populate(['organizer', 'category', 'city', 'country']);
         return event;
 
     } catch (error) {

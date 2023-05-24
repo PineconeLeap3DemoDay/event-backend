@@ -35,7 +35,7 @@ async function start() {
   });
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
-    context: async ({ req, res }) => {
+    context: async ({ req }) => {
       const { authorization } = req?.headers;
       if (!authorization) return null;
       const user = await authScope(authorization);

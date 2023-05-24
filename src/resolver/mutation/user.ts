@@ -87,6 +87,7 @@ export const editUser = async (_: any, {user: input}: any, context: any) => {
   return true;
 };
 export const followCompany = async (_: any, param: any, context: any) => {
+  console.log(context)
   if(!context || context?.user?.variant !== 'user') {
     throw new GraphQLError("you are not authorized");
   }
