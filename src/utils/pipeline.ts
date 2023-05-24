@@ -227,7 +227,7 @@ export default function aggregatePipeline(arg: any) {
             $match: {
                 //@ts-ignore
                 "title": {
-                    $in: [arg.includes]
+                    $regex: arg.includes
                 }
             },
         },

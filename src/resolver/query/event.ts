@@ -5,6 +5,7 @@ import aggregatePipeline from '../../utils/pipeline';
 export const events = async (_: any, { arg }: any) => {
     if(arg) {
         let pipeline = aggregatePipeline(arg);
+        //@ts-ignore
         const a = await Event.aggregate(pipeline);
         a.map(b => b.category = b.category[0])
         a.map(b => b.country = b.country[0])
@@ -17,7 +18,6 @@ export const events = async (_: any, { arg }: any) => {
 }
 export const event = async (_parent: any, args: any) => {
     const { id: eventid } = args;
-    console.log(eventid)
     try {
         const event = await Event.findById(eventid).populate(['organizer', 'category', 'city', 'country']);
         return event;

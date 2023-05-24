@@ -19,67 +19,48 @@ export const getUser = async (_: any, _param: any, context: any) => {
   }
 };
 export const myHashtagEvents = async (_: any, _param: any, context: any) => {
-  const { user } = context;
-  try {
-    const user1 = await Users.aggregate([
-      {
-        $match: { _id: new mongoose.Types.ObjectId(user.id) },
-      },
-      {
-        $lookup: {
-          from: Category.collection.name,
-          localField: "hashtags",
-          foreignField: "_id",
-          as: "hashtags",
+    const { user } = context;
+    const a = await Users.aggregate([
+        {
+            $match: { _id: new mongoose.Types.ObjectId(user.id) }
         },
-      },
-      {
-        $lookup: {
-          from: Event.collection.name,
-          localField: "hashtags.events",
-          foreignField: "_id",
-          as: "hashtags.events",
+        {
+            $lookup: {
+                from: Category.collection.name,
+                localField: 'hashtags',
+                foreignField: '_id',
+                as: 'hashtags'
+            },
+            
         },
-      },
-      {
-        $match: {
-          "hashtags.event.startDate": {
-            $gte: new Date(),
-          },
+        {
+            $lookup: {
+                from: Event.collection.name,
+                localField: 'hashtags.events',
+                foreignField: '_id',
+                as: 'hashtags.events'
+            }
         },
-      },
-      {
-        $sample: {
-          size: 5,
+        {
+            $match: {
+                "hashtags.events.startDate": {
+                    $gte: new Date()
+                }
+            }
         },
-      },
-    ]);
-    const events = user1[0]?.hashtags?.events;
-    console.log(events);
-
-    return events;
-  } catch (error) {
-    throw new GraphQLError("user not found");
-  }
-};
-export const myTickets = async (_: any, _param: any, context: any) => {
-  const { user } = context;
-  const tickets = await Ticket.find({
-    userid: user.id,
-  });
-  return tickets;
-};
-
-export const getUsers = async (_: any, _param: any, context: any) => {
-  try {
-    const companyID = context.user.id;
-    const isCompany = await Company.findById(companyID);
-    if (!isCompany) {
-      throw new Error("You are not a company");
-    }
-    const allUsers = await Users.find();
-    return allUsers;
-  } catch (error) {
-    throw new GraphQLError("bad request :(");
-  }
-};
+        {
+            $sample: {
+                size: 5
+            }
+        }
+    ])
+        const events = (a[0]?.hashtags?.events);
+        return events
+}
+export const myTickets = async(_: any, _param: any, context: any) => {
+    const { user } = context;
+    const tickets = await Ticket.find({
+        userid: user.id
+    });
+    return tickets
+}
