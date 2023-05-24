@@ -7,8 +7,9 @@ export interface IUser {
   firstName: string;
   hashtags: any[];
   fcmtoken?: string;
-  isNotificationEnabled?: boolean,
+  isNotificationEnabled?: boolean;
   notifications?: [];
+  profile: string;
 }
 
 const UserModel = new mongoose.Schema({
@@ -65,13 +66,18 @@ const UserModel = new mongoose.Schema({
       ref: "notification",
     },
   ],
+  profile: {
+    type: String,
+    default:
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  },
   fcmtoken: {
     type: String,
   },
   isNotificationEnabled: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 export const Users = mongoose.model<IUser>("User", UserModel);
