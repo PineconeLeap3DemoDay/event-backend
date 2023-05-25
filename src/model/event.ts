@@ -104,7 +104,7 @@ eventModel.pre("save", async function () {
           Authorization: `key=AAAAiw-HM0E:APA91bHsJXOgFAdsjvnT4SA9Hg1kYDuPm6StzMtNqndkDObHWdYc84Z-TcNCWybu78mD_1NlW83xfP1b0UBTLaoUXLCa02tw7oP4Mo8zrUuyiPFmRllbXcqm7ejMfdimBZH1mLaUHM-Z`,
         },
         data: {
-          to: "fL0-gU6lR2OhxUtTnH8k3W:APA91bHMm2cPLhgy9GUFY96K6jdH2IkFesLf-sj7cEwdmUvHeGOXBro1mkW7bdtF327tgLwXYM1bLse9T9mN_kpgU2S9YCS5LmvnpmbSAE5HJqWJWnCFeCjex59SzDs9Sq3iqpm5RWA4",
+          to: user.fcmtoken,
           notification: {
             body: "Шинэ эвэнт нэмэгдлээ",
             title: this.title,
